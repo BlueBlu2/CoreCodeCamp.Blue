@@ -14,7 +14,9 @@ namespace CoreCodeCamp.Api.Blue.Profiles
         public MappingProfiles()
         {
             CreateMap<Camp, CampModel>().ForMember(dist => dist.Venue, op => op.MapFrom(src => src.Location.VenueName)).ReverseMap();
-            CreateMap<Talk, TalkModel>().ReverseMap();
+            CreateMap<Talk, TalkModel>().ReverseMap()
+                .ForMember(t => t.Camp , opt => opt.Ignore())
+                .ForMember(t => t.Speaker , opt => opt.Ignore());
             CreateMap<Speaker, SpeakerModel>().ReverseMap();
 
         }
