@@ -13,6 +13,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using System.Reflection;
+using Microsoft.AspNetCore.Mvc.Versioning.Conventions;
+using CoreCodeCamp.Api.Blue.Controllers;
 
 namespace CoreCodeCamp.Api.Blue
 {
@@ -31,6 +33,18 @@ namespace CoreCodeCamp.Api.Blue
             services.AddDbContext<CampContext>();
             services.AddScoped<ICampRepository, CampRepository>();
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
+            services.AddApiVersioning(config =>
+            {
+                config.DefaultApiVersion = new ApiVersion(1, 0);
+                config.AssumeDefaultVersionWhenUnspecified = true;
+                config.ReportApiVersions = true;
+                //config.ApiVersionReader = new UrlSegmentApiVersionReader();
+                //config.ApiVersionReader = new QueryStringApiVersionReader("ver");
+                //config.ApiVersionReader = new HeaderApiVersionReader("X-Version");
+                //config.ApiVersionReader = ApiVersionReader.Combine( new HeaderApiVersionReader("X-Version"), new QueryStringApiVersionReader("ver","version"));
+                //config.Conventions.Controller<TalksController>().HasApiVersion(1, 0).HasApiVersion(1, 1).Action(c => c.Delete(default(string), default(int))).MapToApiVersion(1, 1);
+            });
+            
             services.AddControllers();
         }
 
