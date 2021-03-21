@@ -1,3 +1,4 @@
+using CoreCodeCamp.Api.Blue.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -10,6 +11,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
+using System.Reflection;
 
 namespace CoreCodeCamp.Api.Blue
 {
@@ -25,6 +28,9 @@ namespace CoreCodeCamp.Api.Blue
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<CampContext>();
+            services.AddScoped<ICampRepository, CampRepository>();
+            services.AddAutoMapper(Assembly.GetExecutingAssembly());
             services.AddControllers();
         }
 
@@ -36,7 +42,7 @@ namespace CoreCodeCamp.Api.Blue
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
 
             app.UseRouting();
 
